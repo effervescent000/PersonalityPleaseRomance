@@ -46,13 +46,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DefOfs\RomanceTraitDefOf.cs" />
     <Compile Include="HarmonyPatches\PawnGeneration\PawnGenerator.cs" />
+    <Compile Include="Helpers\SexualityValues.cs" />
+    <Compile Include="Helpers\SexualityHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HarmonyPatches\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref">
       <Version>1.4.3901</Version>
+    </PackageReference>
+    <PackageReference Include="Lib.Harmony">
+      <Version>2.2.2</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
