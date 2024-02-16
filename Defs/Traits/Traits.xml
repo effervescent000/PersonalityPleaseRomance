@@ -11,24 +11,12 @@
     </degreeDatas>
   </TraitDef>
   <TraitDef>
-    <defName>Asexual</defName>
-    <commonality>0</commonality>
-    <degreeDatas>
-      <li>
-        <label>oh no it broke</label>
-        <description>You shouldn't be seeing this trait! Pls report to effervescent. trait name:
-          Asexual.</description>
-      </li>
-    </degreeDatas>
-  </TraitDef>
-  <TraitDef>
     <defName>AceHetero</defName>
     <commonality>0</commonality>
     <degreeDatas>
       <li>
         <label>asexual (het)</label>
-        <description>{PAWN_nameDef} is asexual, but is romantically attracted to the opposite
-          gender. </description>
+        <description>{PAWN_nameDef} is asexual, but is romantically attracted to the opposite gender.</description>
       </li>
     </degreeDatas>
   </TraitDef>

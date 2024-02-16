@@ -19,6 +19,7 @@ public class PawnGenerator_Patches
         {
             return pawn;
         }
+        // this should no longer be necessary but I'm keeping it in for a bit to see if it pop stuff into the log
         //remove vanilla sexuality traits
         Trait sexualityTrait = null;
         foreach (Trait trait in pawn.story.traits.allTraits)
@@ -30,12 +31,8 @@ public class PawnGenerator_Patches
         }
         if (sexualityTrait is not null)
         {
-            Log.Message($"attempting to remove trait for pawn {pawn.Name}: {sexualityTrait.def.defName}");
+            Log.Warning($"attempting to remove trait for pawn {pawn.Name}: {sexualityTrait.def.defName}");
             pawn.story.traits.RemoveTrait(sexualityTrait);
-            foreach (var trait in pawn.story.traits.allTraits)
-            {
-                Log.Message($"remaining traits: {trait.def.defName} (out of {pawn.story.traits.allTraits.Count})");
-            }
 
             // reroll a different trait
             Trait newTrait = null;
