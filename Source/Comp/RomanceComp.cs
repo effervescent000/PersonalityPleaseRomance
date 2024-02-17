@@ -9,9 +9,7 @@ namespace Personality.Romance;
 
 public class RomanceComp : ThingComp
 {
-
     private RomanceTracker romanceTracker;
-
 
     public RomanceTracker RomanceTracker => romanceTracker;
 
@@ -20,4 +18,13 @@ public class RomanceComp : ThingComp
         Scribe_Deep.Look(ref romanceTracker, "romance");
     }
 
+    public override void PostSpawnSetup(bool respawningAfterLoad)
+    {
+        romanceTracker = new RomanceTracker();
+    }
+
+    public override void CompTick()
+    {
+        romanceTracker?.Tick();
+    }
 }
