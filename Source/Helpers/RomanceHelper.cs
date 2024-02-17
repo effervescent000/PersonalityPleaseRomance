@@ -16,7 +16,7 @@ public static class RomanceHelper
         List<Pawn> availablePawns =
             (
                 from pawn in homeMap.mapPawns.AllPawnsSpawned
-                where pawn.def.defName == "Human" && pawn.ageTracker.AgeBiologicalYears >= 18f
+                where pawn.def.defName == "Human" && pawn.ageTracker.AgeBiologicalYears >= 16f
                 select pawn
              ).ToList();
 
@@ -37,6 +37,9 @@ public static class RomanceHelper
 
             // TODO if pawn is in the Actor's reject list, ignore (unless conditions? maybe highly
             // chaotic and/or uncompassionate?)
+
+            // no hooking up with blood relations
+            if (actor.IsBloodRelatedTo(pawn)) { continue; }
 
             potentialPartners.Add(pawn);
         }

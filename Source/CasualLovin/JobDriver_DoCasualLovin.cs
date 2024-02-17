@@ -20,7 +20,6 @@ public class JobDriver_DoCasualLovin : JobDriver
     private Pawn Partner => (Pawn)(Thing)job.GetTarget(PartnerInd);
     private Pawn Actor => GetActor();
 
-
     public override bool TryMakePreToilReservations(bool errorOnFailed)
     {
         return pawn.Reserve(Partner, job, 1, -1, null, errorOnFailed) && pawn.Reserve(Bed, job, Bed.SleepingSlotsCount, 0, null, errorOnFailed);
@@ -63,8 +62,8 @@ public class JobDriver_DoCasualLovin : JobDriver
         layDown.initAction = delegate
         {
             layDown.actor.pather.StopDead();
-            //JobDriver curDriver = layDown.actor.jobs.curDriver;
-            //curDriver.asleep = false;
+            JobDriver curDriver = layDown.actor.jobs.curDriver;
+            curDriver.asleep = false;
             layDown.actor.jobs.posture = PawnPosture.LayingInBed;
         };
         layDown.tickAction = delegate
@@ -101,5 +100,4 @@ public class JobDriver_DoCasualLovin : JobDriver
             socialMode = RandomSocialMode.Off
         };
     }
-
 }

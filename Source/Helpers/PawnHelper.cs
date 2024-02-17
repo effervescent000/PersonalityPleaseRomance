@@ -17,4 +17,14 @@ public static class PawnHelper
 
         return true;
     }
+
+    public static bool IsBloodRelatedTo(this Pawn pawn, Pawn target)
+    {
+        var familyMembers = (from member in pawn.relations.FamilyByBlood
+                             where member.ThingID == target.ThingID
+                             select member).ToList();
+
+        if (familyMembers.Count > 0) { return true; }
+        return false;
+    }
 }

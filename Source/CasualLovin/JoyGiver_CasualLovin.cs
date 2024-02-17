@@ -11,14 +11,13 @@ namespace Personality.Romance;
 
 public class JoyGiver_CasualLovin : JoyGiver
 {
-
     public override Job TryGiveJob(Pawn pawn)
     {
         if (pawn.IsAsexual())
         {
             return null;
         }
-        if (pawn.ageTracker.AgeBiologicalYearsFloat < 18f)
+        if (pawn.ageTracker.AgeBiologicalYearsFloat < 16f)
         {
             return null;
         }
@@ -42,5 +41,4 @@ public class JoyGiver_CasualLovin : JoyGiver
 
         return JobMaker.MakeJob(def.jobDef, partner, bed);
     }
-
 }
