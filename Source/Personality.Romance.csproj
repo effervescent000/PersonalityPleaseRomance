@@ -51,9 +51,13 @@
     <Compile Include="CasualLovin\JobDriver_InitiateCasualLovin.cs" />
     <Compile Include="CasualLovin\JoyGiver_CasualLovin.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Comp\RejectionItem.cs" />
+    <Compile Include="Comp\RomanceComp.cs" />
+    <Compile Include="Comp\RomanceTracker.cs" />
     <Compile Include="DefOfs\RomanceJobDefOf.cs" />
     <Compile Include="DefOfs\RomanceTraitDefOf.cs" />
     <Compile Include="HarmonyPatches\PawnGeneration\PawnGenerator.cs" />
+    <Compile Include="Helpers\GameHelper.cs" />
     <Compile Include="Helpers\RomanceHelper.cs" />
     <Compile Include="Helpers\SexualityValues.cs" />
     <Compile Include="Helpers\SexualityHelpers.cs" />
