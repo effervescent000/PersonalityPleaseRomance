@@ -27,6 +27,13 @@ public static class SexualityHelpers
     private static SexualityValues aceHomoValues = new(RomanceTraitDefOf.AceHomo, homoChanceBase);
     private static SexualityValues aroAceValues = new(RomanceTraitDefOf.AroAce, asexualityChanceBase);
 
+    private static List<string> asexualTraitDefNames = new()
+        {   aceBiValues.TraitDef.defName,
+            aceHeteroValues.TraitDef.defName,
+            aceHomoValues.TraitDef.defName,
+            aroAceValues.TraitDef.defName
+        };
+
 
     public static void RollSexualityTraitFor(Pawn pawn)
     {
@@ -128,5 +135,21 @@ public static class SexualityHelpers
 
         }
         throw new Exception("No sexuality match found, somehow");
+    }
+
+    public static bool IsAsexual(this Pawn pawn)
+    {
+        if (pawn.story != null && pawn.story.traits != null)
+        {
+            foreach (Trait? trait in pawn.story.traits.allTraits)
+            {
+                if (asexualTraitDefNames.Contains(trait.def.defName))
+                {
+                    return true;
+                }
+
+            }
+        }
+        return false;
     }
 }

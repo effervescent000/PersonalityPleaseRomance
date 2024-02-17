@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <!-- JoyGivers -->
+  <JoyGiverDef>
+    <defName>TryHookup</defName>
+    <giverClass>Personality.Romance.JoyGiver_CasualLovin</giverClass>
+    <baseChance>100</baseChance>
+    <jobDef>LeadHookup</jobDef>
+    <joyKind>Sexual</joyKind>
+  </JoyGiverDef>
+
+
+  <!-- JoyKinDefs -->
+  <JoyKindDef>
+    <defName>Sexual</defName>
+    <label>adult fun</label>
+    <needsThing>false</needsThing>
+  </JoyKindDef>
+</Defs>
