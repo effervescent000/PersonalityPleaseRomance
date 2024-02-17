@@ -23,14 +23,11 @@ public class JoyGiver_CasualLovin : JoyGiver
             return null;
         }
 
-        Log.Message($"Looking for partner for {pawn.Name}");
+        Log.Message($"Looking for partner for {pawn.LabelShort}");
 
         Pawn partner = RomanceHelper.FindPartner(pawn);
-        if (partner.ThingID == pawn.ThingID)
-        {
-            return null;
-        }
-        Log.Message($"Found pair for hookup: {pawn.Name} & {partner.Name}");
+
+        Log.Message($"Found pair for hookup: {pawn.LabelShort} & {partner.LabelShort}");
 
         Building_Bed bed = RomanceHelper.FindBed(pawn, partner);
         if (bed == null)
