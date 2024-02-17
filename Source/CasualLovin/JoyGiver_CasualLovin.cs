@@ -26,6 +26,10 @@ public class JoyGiver_CasualLovin : JoyGiver
         Log.Message($"Looking for partner for {pawn.LabelShort}");
 
         Pawn partner = RomanceHelper.FindPartner(pawn);
+        if (partner == null)
+        {
+            return null;
+        }
 
         Log.Message($"Found pair for hookup: {pawn.LabelShort} & {partner.LabelShort}");
 

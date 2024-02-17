@@ -7,15 +7,21 @@ namespace Personality.Romance;
 
 public static class RomanceHelper
 {
+    // 0 for testing purposes
+    private const float MINIMUM_ACCEPTANCE_VALUE = 0f;
 
     public static Pawn FindPartner(Pawn actor)
     {
         Map homeMap = actor.Map;
-        List<Pawn> availablePawns = homeMap.mapPawns.FreeAdultColonistsSpawned;
+        List<Pawn> availablePawns =
+            (
+                from pawn in homeMap.mapPawns.AllPawnsSpawned
+                where pawn.def.defName == "Human" && pawn.ageTracker.AgeBiologicalYears >= 18f
+                select pawn
+             ).ToList();
 
-        // make a new list of potential partners
-        // iterate over `availablePawns` and add pawns that pass basic checks to new list
-        // return a random pawn from new list
+        // make a new list of potential partners iterate over `availablePawns` and add pawns that
+        // pass basic checks to new list return a random pawn from new list
 
         List<Pawn> potentialPartners = new();
 
@@ -26,6 +32,12 @@ public static class RomanceHelper
             // pawns will never initiate casual lovin' with someone who does not match their orientation
             if (!SexualityHelper.DoesOrientationMatch(actor, pawn, true)) { continue; }
 
+            // if pawn is too far away, ignore
+            if (!IsTargetInRange(actor, pawn)) { continue; }
+
+            // TODO if pawn is in the Actor's reject list, ignore (unless conditions? maybe highly
+            // chaotic and/or uncompassionate?)
+
             potentialPartners.Add(pawn);
         }
         if (potentialPartners.Count > 0)
@@ -33,7 +45,6 @@ public static class RomanceHelper
             return potentialPartners.RandomElement();
         }
         return null;
-
     }
 
     public static Building_Bed FindBed(Pawn actor, Pawn partner)
@@ -47,4 +58,32 @@ public static class RomanceHelper
         return null;
     }
 
+    public static bool IsTargetInRange(Pawn actor, Pawn target)
+    {
+        // TODO replace hard-coded distance with a setting value
+        return actor.Position.InHorDistOf(target.Position, 100f);
+    }
+
+    public static bool DoesTargetAcceptHookup(Pawn actor, Pawn target)
+    {
+        float baseValue = Rand.Value;
+        float adjustedValue = baseValue;
+
+        // TODO add in relationship checks (existing lovers are much more likely to accept, etc)
+
+        // TODO add precept checks: unmarried pawns in non-free-lovin ideos are unlikely to accept,
+        // depending on strength of precept
+
+        // target is much less likely to accept if they have an orientation mismatch
+        if (!SexualityHelper.DoesOrientationMatch(actor, target, true))
+        {
+            adjustedValue *= .1f;
+        }
+
+        if (adjustedValue < MINIMUM_ACCEPTANCE_VALUE)
+        {
+            return false;
+        }
+        return true;
+    }
 }

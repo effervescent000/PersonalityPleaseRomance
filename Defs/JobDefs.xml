@@ -14,5 +14,6 @@
     <joyKind>Sexual</joyKind>
     <joyXpPerTick>0.004</joyXpPerTick>
     <joyGainRate>3</joyGainRate>
+    <casualInterruptible>false</casualInterruptible>
   </JobDef>
 </Defs>

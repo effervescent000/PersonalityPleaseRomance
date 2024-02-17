@@ -55,6 +55,7 @@
     <Compile Include="Comp\RomanceComp.cs" />
     <Compile Include="Comp\RomanceTracker.cs" />
     <Compile Include="DefOfs\RomanceJobDefOf.cs" />
+    <Compile Include="DefOfs\RomanceThoughtDefOf.cs" />
     <Compile Include="DefOfs\RomanceTraitDefOf.cs" />
     <Compile Include="HarmonyPatches\PawnGeneration\PawnGenerator.cs" />
     <Compile Include="Helpers\GameHelper.cs" />

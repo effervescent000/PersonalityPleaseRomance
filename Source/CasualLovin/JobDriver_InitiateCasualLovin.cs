@@ -7,7 +7,6 @@ namespace Personality.Romance;
 
 public class JobDriver_InitiateCasualLovin : JobDriver
 {
-    // im not sure why i have to do this but WBR says to do it
     public bool targetAccepted = true;
     public bool DidTargetAccept => targetAccepted;
 
@@ -33,10 +32,10 @@ public class JobDriver_InitiateCasualLovin : JobDriver
         }
 
         this.FailOnDespawnedNullOrForbidden(TargetPawnIndex);
-        // TODO add a fail condition for if the target pawn gets too far away
 
         Toil goToTarget = Toils_Interpersonal.GotoInteractablePosition(TargetPawnIndex);
         goToTarget.socialMode = RandomSocialMode.Off;
+        goToTarget.AddFailCondition(() => !RomanceHelper.IsTargetInRange(Actor, TargetPawn));
         yield return goToTarget;
 
         Toil wait = Toils_Interpersonal.WaitToBeAbleToInteract(pawn);
@@ -51,9 +50,8 @@ public class JobDriver_InitiateCasualLovin : JobDriver
                 ticksLeftThisToil = 50;
                 FleckMaker.ThrowMetaIcon(Actor.Position, Actor.Map, FleckDefOf.Heart);
             }
-
         };
-        // proposition should fail if target pawn is dead or downed
+        proposeCasualLovin.AddFailCondition(() => !TargetPawn.IsOk());
         yield return proposeCasualLovin;
 
         Toil awaitResponse = new()
@@ -61,10 +59,10 @@ public class JobDriver_InitiateCasualLovin : JobDriver
             defaultCompleteMode = ToilCompleteMode.Instant,
             initAction = delegate
             {
-                // this should be true or false based on whether target accepts
-                targetAccepted = true;
+                targetAccepted = RomanceHelper.DoesTargetAcceptHookup(Actor, TargetPawn);
             }
         };
+        awaitResponse.AddFailCondition(() => !DidTargetAccept);
         yield return awaitResponse;
 
         Toil giveLovinJobsOrEnd = new()
@@ -74,17 +72,26 @@ public class JobDriver_InitiateCasualLovin : JobDriver
             {
                 if (!DidTargetAccept)
                 {
-                    return;
+                    Log.Message("Target refused.");
+                    // add target to rejection list
+                    FleckMaker.ThrowMetaIcon(TargetPawn.Position, TargetPawn.Map, FleckDefOf.IncapIcon);
+                    RomanceComp comp = pawn.GetComp<RomanceComp>();
+                    comp.RomanceTracker.RejectionList.Add(new RejectionItem(TargetPawn));
+                    Actor.needs.mood.thoughts.memories.TryGainMemory(RomanceThoughtDefOf.PPR_TurnedMeDownForHookup, TargetPawn);
+                    TargetPawn.needs.mood.thoughts.memories.TryGainMemory(RomanceThoughtDefOf.PPR_HadToRejectSomeoneForHookup, Actor);
                 }
-                Actor.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.DoCasualLovin, TargetPawn, Bed, Bed.GetSleepingSlotPos(0)), JobTag.SatisfyingNeeds);
-                TargetPawn.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.DoCasualLovin, Actor, Bed, Bed.GetSleepingSlotPos(1)), JobTag.SatisfyingNeeds);
-                Actor.jobs.EndCurrentJob(JobCondition.InterruptOptional);
-                TargetPawn.jobs.EndCurrentJob(JobCondition.InterruptOptional);
+                else
+                {
+                    Log.Message("Target accepted");
+                    FleckMaker.ThrowMetaIcon(TargetPawn.Position, TargetPawn.Map, FleckDefOf.Heart);
+                    Actor.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.DoCasualLovin, TargetPawn, Bed, Bed.GetSleepingSlotPos(0)), JobTag.SatisfyingNeeds);
+                    TargetPawn.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.DoCasualLovin, Actor, Bed, Bed.GetSleepingSlotPos(1)), JobTag.SatisfyingNeeds);
+                    TargetPawn.jobs.EndCurrentJob(JobCondition.InterruptOptional);
+                    Actor.jobs.EndCurrentJob(JobCondition.InterruptOptional);
+                }
             }
         };
-        
+
         yield return giveLovinJobsOrEnd;
-
-
     }
 }

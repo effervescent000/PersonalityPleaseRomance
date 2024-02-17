@@ -20,7 +20,6 @@ public class RejectionItem : IExposable
 
     public RejectionItem Get => this;
 
-
     public void ExposeData()
     {
         Scribe_References.Look(ref pawn, "pawn");

@@ -13,7 +13,6 @@ public class RomanceTracker : IExposable
 
     public RomanceTracker()
     {
-        
     }
 
     public HashSet<RejectionItem> RejectionList => rejectionList;
@@ -35,7 +34,6 @@ public class RomanceTracker : IExposable
             rejectionList.Remove(item);
         }
     }
-
 
     public void ExposeData()
     {

@@ -13,7 +13,7 @@ public static class PawnHelper
 {
     public static bool IsOk(this Pawn pawn)
     {
-        if (pawn == null || !pawn.health.capacities.CanBeAwake || pawn.health.Downed || pawn.health.Dead) return false;
+        if (pawn == null || pawn.health.Downed || pawn.health.Dead) return false;
 
         return true;
     }
