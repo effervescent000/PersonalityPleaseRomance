@@ -7,8 +7,7 @@ namespace Personality.Romance;
 
 public static class RomanceHelper
 {
-    // 0 for testing purposes
-    private const float MINIMUM_ACCEPTANCE_VALUE = 0f;
+    private const float MINIMUM_ACCEPTANCE_VALUE = 0.5f;
 
     public static Pawn FindPartner(Pawn actor)
     {
