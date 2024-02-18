@@ -47,7 +47,7 @@ public class PawnGenerator_Patches
             pawn.story.traits.GainTrait(newTrait);
         }
         // now assign a sexuality trait
-        SexualityHelpers.RollSexualityTraitFor(pawn);
+        SexualityHelper.RollSexualityTraitFor(pawn);
 
         return pawn;
     }

@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Personality.Romance</RootNamespace>
     <AssemblyName>Personality Please Romance</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <LangVersion>10</LangVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -46,13 +47,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="CasualLovin\JobDriver_DoCasualLovin.cs" />
+    <Compile Include="CasualLovin\JobDriver_InitiateCasualLovin.cs" />
+    <Compile Include="CasualLovin\JoyGiver_CasualLovin.cs" />
+    <Compile Include="Comp\RejectionItem.cs" />
+    <Compile Include="Comp\RomanceComp.cs" />
+    <Compile Include="Comp\RomanceTracker.cs" />
+    <Compile Include="DefOfs\RomanceJobDefOf.cs" />
+    <Compile Include="DefOfs\RomanceThoughtDefOf.cs" />
     <Compile Include="DefOfs\RomanceTraitDefOf.cs" />
     <Compile Include="HarmonyPatches\PawnGeneration\PawnGenerator.cs" />
+    <Compile Include="Helpers\GameHelper.cs" />
+    <Compile Include="Helpers\PawnHelper.cs" />
+    <Compile Include="Helpers\RomanceHelper.cs" />
     <Compile Include="Helpers\SexualityValues.cs" />
-    <Compile Include="Helpers\SexualityHelpers.cs" />
+    <Compile Include="Helpers\SexualityHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HarmonyPatches\Startup.cs" />
+    <Compile Include="RomanceMod.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\SettingValues.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref">

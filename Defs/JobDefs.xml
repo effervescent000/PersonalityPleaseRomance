@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <JobDef>
+    <defName>LeadHookup</defName>
+    <driverClass>Personality.Romance.JobDriver_InitiateCasualLovin</driverClass>
+    <reportString>attempting hookup.</reportString>
+    <joyMaxParticipants>1</joyMaxParticipants>
+    <joyKind>Sexual</joyKind>
+  </JobDef>
+  <JobDef>
+    <defName>DoCasualLovin</defName>
+    <driverClass>Personality.Romance.JobDriver_DoCasualLovin</driverClass>
+    <reportString>lovin'.</reportString>
+    <joyKind>Sexual</joyKind>
+    <joyXpPerTick>0.004</joyXpPerTick>
+    <joyGainRate>3</joyGainRate>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+</Defs>

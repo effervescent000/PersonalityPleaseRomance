@@ -16,9 +16,6 @@ public static class RomanceTraitDefOf
     public static TraitDef AceBi;
     public static TraitDef AceHomo;
 
-    // asexual should never actually show up. if it does you broke it!!!!!!
-    public static TraitDef Asexual;
-
     static RomanceTraitDefOf()
     {
         DefOfHelper.EnsureInitializedInCtor(typeof(RomanceTraitDefOf));

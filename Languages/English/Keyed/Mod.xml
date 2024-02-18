@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- main -->
+  <PPR.Romance>Personality, Please: Romance</PPR.Romance>
+
+  <!-- mod setting labels -->
+  <PPR.MaxInteractDistance.Label>Max interaction distance</PPR.MaxInteractDistance.Label>
+  <PPR.MaxInteractDistance.Desc>Maximum distance between two pawns for them to be considered valid interaction targets</PPR.MaxInteractDistance.Desc>
+</LanguageData>
