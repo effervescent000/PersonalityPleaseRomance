@@ -62,8 +62,7 @@ public static class RomanceHelper
 
     public static bool IsTargetInRange(Pawn actor, Pawn target)
     {
-        // TODO replace hard-coded distance with a setting value
-        return actor.Position.InHorDistOf(target.Position, 100f);
+        return actor.Position.InHorDistOf(target.Position, RomanceMod.settings.MaxInteractionDistance.Value);
     }
 
     public static bool DoesTargetAcceptHookup(Pawn actor, Pawn target)
