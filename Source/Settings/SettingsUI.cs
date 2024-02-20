@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Verse;
 
 namespace Personality.Romance;
 
-[StaticConstructorOnStartup]
-public static class OnStartup
+public static class SettingsUI
 {
-    static OnStartup()
-    {
-    }
 }
