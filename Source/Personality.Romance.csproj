@@ -66,6 +66,7 @@
     <Compile Include="Helpers\RomanceHelper.cs" />
     <Compile Include="Helpers\SexualityValues.cs" />
     <Compile Include="Helpers\SexualityHelper.cs" />
+    <Compile Include="OnStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HarmonyPatches\Startup.cs" />
     <Compile Include="RomanceMod.cs" />

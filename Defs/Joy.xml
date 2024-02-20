@@ -4,15 +4,15 @@
   <JoyGiverDef>
     <defName>TryHookup</defName>
     <giverClass>Personality.Romance.JoyGiver_CasualLovin</giverClass>
-    <baseChance>100</baseChance>
+    <baseChance>1.5</baseChance>
     <jobDef>LeadHookup</jobDef>
-    <joyKind>Sexual</joyKind>
+    <joyKind>Lovin</joyKind>
   </JoyGiverDef>
 
 
-  <!-- JoyKinDefs -->
+  <!-- JoyKindDefs -->
   <JoyKindDef>
-    <defName>Sexual</defName>
+    <defName>Lovin</defName>
     <label>adult fun</label>
     <needsThing>false</needsThing>
   </JoyKindDef>
