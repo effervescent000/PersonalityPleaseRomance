@@ -67,8 +67,7 @@ public static class RomanceHelper
 
     public static bool DoesTargetAcceptHookup(Pawn actor, Pawn target)
     {
-        float baseValue = Rand.Value;
-        float adjustedValue = baseValue;
+        float rolledValue = Rand.Value;
 
         // TODO add in relationship checks (existing lovers are much more likely to accept, etc)
 
@@ -78,10 +77,10 @@ public static class RomanceHelper
         // target is much less likely to accept if they have an orientation mismatch
         if (!SexualityHelper.DoesOrientationMatch(actor, target, true))
         {
-            adjustedValue *= .1f;
+            rolledValue *= .1f;
         }
 
-        if (adjustedValue < MINIMUM_ACCEPTANCE_VALUE)
+        if (rolledValue < MINIMUM_ACCEPTANCE_VALUE)
         {
             return false;
         }
