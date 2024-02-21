@@ -6,13 +6,13 @@
     <giverClass>Personality.Romance.JoyGiver_SeekLovin</giverClass>
     <baseChance>1.5</baseChance>
     <!-- <jobDef>LeadHookup</jobDef> -->
-    <joyKind>PPR_Lovin</joyKind>
+    <joyKind>PP_Lovin</joyKind>
   </JoyGiverDef>
 
 
   <!-- JoyKindDefs -->
   <JoyKindDef>
-    <defName>PPR_Lovin</defName>
+    <defName>PP_Lovin</defName>
     <label>adult fun</label>
     <needsThing>false</needsThing>
   </JoyKindDef>
