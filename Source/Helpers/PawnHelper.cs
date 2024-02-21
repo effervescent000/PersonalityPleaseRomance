@@ -27,4 +27,9 @@ public static class PawnHelper
         if (familyMembers.Count > 0) { return true; }
         return false;
     }
+
+    public static void ThrowHeart(this Pawn pawn)
+    {
+        FleckMaker.ThrowMetaIcon(pawn.Position, pawn.Map, FleckDefOf.Heart);
+    }
 }

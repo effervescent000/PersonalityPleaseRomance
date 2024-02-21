@@ -6,15 +6,27 @@
     <driverClass>Personality.Romance.JobDriver_InitiateCasualLovin</driverClass>
     <reportString>attempting hookup.</reportString>
     <joyMaxParticipants>1</joyMaxParticipants>
-    <joyKind>Lovin</joyKind>
+    <joyKind>PPR_Lovin</joyKind>
   </JobDef>
   <JobDef>
     <defName>DoCasualLovin</defName>
     <driverClass>Personality.Romance.JobDriver_DoCasualLovin</driverClass>
     <reportString>lovin'.</reportString>
-    <joyKind>Lovin</joyKind>
+    <joyKind>PPR_Lovin</joyKind>
     <joyXpPerTick>0.004</joyXpPerTick>
     <joyGainRate>3</joyGainRate>
     <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
+  <!-- self-lovin -->
+  <!-- this probably only needs to be one job, since the pawn
+  doesn't need to seek out a partner and ask them -->
+  <JobDef>
+    <defName>DoSelfLovin</defName>
+    <driverClass>Personality.Romance.JobDriver_DoSelfLovin</driverClass>
+    <reportString>self-lovin'.</reportString>
+    <joyKind>PPR_Lovin</joyKind>
+    <joyXpPerTick>0.004</joyXpPerTick>
+    <joyGainRate>2</joyGainRate>
   </JobDef>
 </Defs>

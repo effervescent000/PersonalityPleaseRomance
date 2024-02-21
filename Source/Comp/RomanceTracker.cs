@@ -21,7 +21,7 @@ public class RomanceTracker : IExposable
     {
         List<RejectionItem> itemsToRemove = new();
 
-        foreach (var item in rejectionList)
+        foreach (RejectionItem item in rejectionList)
         {
             item.TicksSinceAsked++;
             if (item.TicksSinceAsked > GameHelper.TICKS_PER_DAY * 2)
@@ -29,7 +29,7 @@ public class RomanceTracker : IExposable
                 itemsToRemove.Add(item);
             }
         }
-        foreach (var item in itemsToRemove)
+        foreach (RejectionItem item in itemsToRemove)
         {
             rejectionList.Remove(item);
         }

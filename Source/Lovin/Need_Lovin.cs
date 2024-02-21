@@ -8,7 +8,7 @@ using Verse;
 
 namespace Personality.Romance;
 
-public class LovinNeed : Need_Seeker
+public class Need_Lovin : Need_Seeker
 {
     private readonly float baseFallPerDay = 0.33f;
 
@@ -17,7 +17,7 @@ public class LovinNeed : Need_Seeker
     private float threshDesperate = 0.05f;
     private float threshHorny = 0.25f;
 
-    public LovinNeed(Pawn pawn) : base(pawn)
+    public Need_Lovin(Pawn pawn) : base(pawn)
     {
         threshPercents = new List<float>
         {

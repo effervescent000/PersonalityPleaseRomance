@@ -49,7 +49,7 @@ public static class RomanceHelper
         return null;
     }
 
-    public static Building_Bed FindBed(Pawn actor, Pawn partner)
+    public static Building_Bed FindBed(Pawn actor, Pawn partner = null)
     {
         // find literally any bed
         List<Building_Bed> beds = actor.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().ToList();

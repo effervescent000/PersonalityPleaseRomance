@@ -12,6 +12,8 @@ namespace Personality.Romance;
 public static class RomanceJobDefOf
 {
     public static JobDef DoCasualLovin;
+    public static JobDef DoSelfLovin;
+    public static JobDef LeadHookup;
 
     static RomanceJobDefOf()
     {
