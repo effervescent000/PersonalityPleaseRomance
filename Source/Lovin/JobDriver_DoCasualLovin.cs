@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using Personality.Core;
+using RimWorld;
 using System.Collections.Generic;
 using Verse;
 using Verse.AI;
@@ -73,7 +74,7 @@ public class JobDriver_DoCasualLovin : JobDriver
         yield return layDown;
 
         // do lovin'
-        Toil lovin = new()
+        yield return new Toil
         {
             initAction = delegate
             {
@@ -83,21 +84,28 @@ public class JobDriver_DoCasualLovin : JobDriver
             {
                 if (ticksLeftThisToil % TicksBetweenHeartMotes == 0)
                 {
-                    FleckMaker.ThrowMetaIcon(Actor.Position, Actor.Map, FleckDefOf.Heart);
+                    Actor.ThrowHeart();
                 }
             },
             defaultCompleteMode = ToilCompleteMode.Delay
         };
-        yield return lovin;
 
-        yield return new Toil
+        if (Settings.LovinModuleActive)
         {
-            initAction = delegate
+            yield return LovinHelper.EvaluateLovin(new LovinProps(LovinContext.Casual, Actor, Partner));
+        }
+        else
+        {
+            yield return new Toil
             {
-                Thought_Memory thought_memory = (Thought_Memory)ThoughtMaker.MakeThought(ThoughtDefOf.GotSomeLovin);
-            },
-            defaultCompleteMode = ToilCompleteMode.Instant,
-            socialMode = RandomSocialMode.Off
-        };
+                initAction = delegate
+                {
+                    Thought_Memory thought_memory = (Thought_Memory)ThoughtMaker.MakeThought(ThoughtDefOf.GotSomeLovin);
+                    Actor.needs.mood?.thoughts.memories.TryGainMemory(thought_memory, Partner);
+                },
+                defaultCompleteMode = ToilCompleteMode.Instant,
+                socialMode = RandomSocialMode.Off
+            };
+        }
     }
 }
