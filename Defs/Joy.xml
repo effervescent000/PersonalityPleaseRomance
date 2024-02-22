@@ -8,12 +8,4 @@
     <!-- <jobDef>LeadHookup</jobDef> -->
     <joyKind>PP_Lovin</joyKind>
   </JoyGiverDef>
-
-
-  <!-- JoyKindDefs -->
-  <JoyKindDef>
-    <defName>PP_Lovin</defName>
-    <label>adult fun</label>
-    <needsThing>false</needsThing>
-  </JoyKindDef>
 </Defs>

@@ -1,39 +1,45 @@
-﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Personality.Core;
+using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace Personality.Romance;
 
 public static class LovinHelper
 {
-    public static void IncreaseLovinNeed(this Pawn pawn, float amount)
+    public static Job TryDoHookup(Pawn pawn)
     {
-        Need_Lovin need = pawn?.needs?.TryGetNeed<Need_Lovin>();
-        if (need == null) return;
+        Pawn partner = RomanceHelper.FindPartner(pawn);
+        // if we can't actually find a partner, then the pawn either gives up and does something
+        // else or does self lovin'
+        if (partner == null)
+        {
+            if (!Settings.LovinModuleActive || Rand.Value <= .75f)
+            {
+                return null;
+            }
+            else
+            {
+                return TryDoSelfLovin(pawn);
+            }
+        }
 
-        need.CurLevel += amount;
+        Building_Bed bed = CoreLovinHelper.FindBed(pawn, partner);
+        if (bed == null)
+        {
+            return null;
+        }
+
+        return JobMaker.MakeJob(RomanceJobDefOf.LeadHookup, partner, bed);
     }
 
-    public static void GetSatisfaction(LovinProps lovin)
+    public static Job TryDoSelfLovin(Pawn pawn)
     {
+        return null;
     }
 
-    public static float GetLovinQuality(Pawn primary, Pawn partner, LovinContext context)
+    public static Toil EvaluateLovin(LovinProps props)
     {
-        float quality = 0f;
-
-        // get partner's skill--eventually this will be a lovin' quality stat
-        SkillRecord partnerSkill = partner.skills.GetSkill(RomanceSkillDefOf.Lovin);
-
-        // get own pawn's lovin skill -- same as above, and this is intended to play a lesser role
-        SkillRecord primarySkill = primary.skills.GetSkill(RomanceSkillDefOf.Lovin);
-
-        // TODO -- in an intimate context, look at the pawns' relationship -- higher boosts lovin'
-
-        // TODO -- in a casual context, look at each pawns' attraction to the other
+        return null;
     }
 }

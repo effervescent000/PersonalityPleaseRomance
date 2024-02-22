@@ -12,5 +12,9 @@ public static class OnStartup
 {
     static OnStartup()
     {
+        if (ModsConfig.IsActive("effervescent.personalityplease.lovin"))
+        {
+            Settings.LovinModuleActive = true;
+        }
     }
 }

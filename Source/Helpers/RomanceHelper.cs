@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using Personality.Core;
 
 namespace Personality.Romance;
 
@@ -29,7 +30,7 @@ public static class RomanceHelper
             if (pawn.ThingID == actor.ThingID || !pawn.IsOk()) { continue; }
 
             // pawns will never initiate casual lovin' with someone who does not match their orientation
-            if (!SexualityHelper.DoesOrientationMatch(actor, pawn, true)) { continue; }
+            if (!CoreLovinHelper.DoesOrientationMatch(actor, pawn, true)) { continue; }
 
             // if pawn is too far away, ignore
             if (!IsTargetInRange(actor, pawn)) { continue; }
@@ -49,17 +50,6 @@ public static class RomanceHelper
         return null;
     }
 
-    public static Building_Bed FindBed(Pawn actor, Pawn partner = null)
-    {
-        // find literally any bed
-        List<Building_Bed> beds = actor.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().ToList();
-        if (beds.Count > 0)
-        {
-            return beds[0];
-        }
-        return null;
-    }
-
     public static bool IsTargetInRange(Pawn actor, Pawn target)
     {
         return actor.Position.InHorDistOf(target.Position, RomanceMod.settings.MaxInteractionDistance.Value);
@@ -75,7 +65,7 @@ public static class RomanceHelper
         // depending on strength of precept
 
         // target is much less likely to accept if they have an orientation mismatch
-        if (!SexualityHelper.DoesOrientationMatch(actor, target, true))
+        if (!CoreLovinHelper.DoesOrientationMatch(actor, target, true))
         {
             rolledValue *= .1f;
         }

@@ -9,8 +9,8 @@ public class Settings : ModSettings
     // permanently enabled rn for testing
     public bool LovinEnabled = true;
 
-    // set automatically
-    //public static bool LovinModuleActive = false;
+    //set automatically
+    public static bool LovinModuleActive = false;
 
     public override void ExposeData()
     {
