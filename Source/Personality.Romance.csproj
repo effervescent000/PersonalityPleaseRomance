@@ -47,7 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attraction\AttractionTracker.cs" />
+    <Compile Include="Attraction\Preference.cs" />
     <Compile Include="HarmonyPatches\CorePatches\Helpers\IsAsexual.cs" />
+    <Compile Include="Helpers\AttractionHelper.cs" />
     <Compile Include="Helpers\LovinHelper.cs" />
     <Compile Include="Lovin\JobDriver_DoCasualLovin.cs" />
     <Compile Include="Lovin\JobDriver_InitiateCasualLovin.cs" />

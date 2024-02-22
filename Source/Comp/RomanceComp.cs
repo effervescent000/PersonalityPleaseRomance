@@ -9,18 +9,23 @@ namespace Personality.Romance;
 
 public class RomanceComp : ThingComp
 {
-    private RomanceTracker romanceTracker;
+    private RomanceTracker romanceTracker = new();
+    private AttractionTracker attractionTracker = new();
 
     public RomanceTracker RomanceTracker => romanceTracker;
 
     public override void PostExposeData()
     {
         Scribe_Deep.Look(ref romanceTracker, "romance");
+        Scribe_Deep.Look(ref attractionTracker, "attraction");
     }
 
     public override void PostSpawnSetup(bool respawningAfterLoad)
     {
-        romanceTracker = new RomanceTracker();
+        if (!respawningAfterLoad)
+        {
+            attractionTracker.Initialize(parent as Pawn);
+        }
     }
 
     public override void CompTick()
