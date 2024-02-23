@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Verse;
 using Personality.Core;
+using RimWorld.BaseGen;
+using System;
 
 namespace Personality.Romance;
 
@@ -12,10 +14,9 @@ public static class RomanceHelper
 
     public static Pawn FindPartner(Pawn actor)
     {
-        Map homeMap = actor.Map;
         List<Pawn> availablePawns =
             (
-                from pawn in homeMap.mapPawns.AllPawnsSpawned
+                from pawn in actor.Map.mapPawns.AllPawnsSpawned
                 where pawn.def.defName == "Human" && pawn.ageTracker.AgeBiologicalYears >= 16f
                 select pawn
              ).ToList();
@@ -45,7 +46,20 @@ public static class RomanceHelper
         }
         if (potentialPartners.Count > 0)
         {
-            return potentialPartners.RandomElement();
+            //return potentialPartners.RandomElement();
+
+            List<Pair<Pawn, AttractionEvaluation>> partnersByAttraction = new();
+            RomanceComp comp = actor.GetComp<RomanceComp>();
+            foreach (var partner in potentialPartners)
+            {
+                partnersByAttraction.Add(new(partner, comp.AttractionTracker.GetEvalFor(partner)));
+            }
+            var sorted = partnersByAttraction.OrderByDescending(pair => pair.Second.PhysicalScore).ToList();
+            Log.Message($"returning partner {sorted[0].First.LabelShort} with an attraction of {sorted[0].Second.PhysicalScore}");
+
+            // TODO instead of just choosing the first one, choose weighted random
+
+            return sorted[0].First;
         }
         return null;
     }

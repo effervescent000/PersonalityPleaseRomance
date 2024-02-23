@@ -29,5 +29,6 @@ public class RomanceComp : ThingComp
     public override void CompTick()
     {
         RomanceTracker?.Tick();
+        AttractionTracker.Tick();
     }
 }
