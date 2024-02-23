@@ -10,10 +10,10 @@ namespace Personality.Romance;
 
 public class AttractionTracker : IExposable
 {
-    public HashSet<Preference<string>> HairStylePreferences = new();
-    public HashSet<Preference<string>> BodyPreferences = new();
-    public HashSet<Preference<Color>> HairColorPreferences = new();
-    public HashSet<Preference<string>> HeadTypePreferences = new();
+    public HashSet<Preference> HairStylePreferences = new();
+    public HashSet<Preference> BodyPreferences = new();
+    public HashSet<Preference> HairColorPreferences = new();
+    public HashSet<Preference> HeadTypePreferences = new();
 
     public AttractionTracker()
     { }
@@ -26,12 +26,12 @@ public class AttractionTracker : IExposable
         while (HairStylePreferences.Count < 4)
         {
             List<string> currentHairTags = (from tag in HairStylePreferences
-                                            select tag.Pref).ToList();
+                                            select tag.Label).ToList();
 
             string newTag = AttractionHelper.HairStyleTags.RandomElement();
             if (!currentHairTags.Contains(newTag))
             {
-                HairStylePreferences.Add(new Preference<string> { Pref = newTag, Value = GetUnmoderateValue(random) });
+                HairStylePreferences.Add(new PreferenceHairStyle { Style = newTag, Value = GetUnmoderateValue(random) });
             }
         }
         Log.Message("Completed HairStlePrefs");
@@ -41,23 +41,23 @@ public class AttractionTracker : IExposable
         while (BodyPreferences.Count < Math.Floor(validBodyTypes.Count * 0.4f))
         {
             List<string> currentPrefs = (from body in BodyPreferences
-                                         select body.Pref).ToList();
-            string selection = validBodyTypes.RandomElement().defName;
-            if (!currentPrefs.Contains(selection))
+                                         select body.Label).ToList();
+            BodyTypeDef selection = validBodyTypes.RandomElement();
+            if (!currentPrefs.Contains(selection.defName))
             {
-                BodyPreferences.Add(new Preference<string> { Pref = selection, Value = GetUnmoderateValue(random) });
+                BodyPreferences.Add(new PreferenceBodyType { Def = selection, Value = GetUnmoderateValue(random) });
             }
         }
         Log.Message("Completed BodyTypePrefs");
 
         while (HairColorPreferences.Count < 3)
         {
-            List<Color> currentPrefs = (from color in HairColorPreferences
-                                        select color.Pref).ToList();
-            Color selection = (Color)AttractionHelper.HairColors.RandomElement();
-            if (!currentPrefs.Contains(selection))
+            List<Color> currentPrefs = (from PreferenceHairColor color in HairColorPreferences
+                                        select color.Color).ToList();
+            GeneDef selection = AttractionHelper.HairColorGenes.RandomElement();
+            if (!currentPrefs.Contains((Color)selection.hairColorOverride))
             {
-                HairColorPreferences.Add(new Preference<Color> { Pref = selection, Value = GetUnmoderateValue(random) });
+                HairColorPreferences.Add(new PreferenceHairColor { Color = (Color)selection.hairColorOverride, Value = GetUnmoderateValue(random) });
             }
         }
         Log.Message("Completed HairColorPrefs");
@@ -65,14 +65,15 @@ public class AttractionTracker : IExposable
         // give pawns one head type attraction for each gender they're attracted to
         if (pawn.IsAttractedToMen())
         {
-            string selection = AttractionHelper.MaleHeads.RandomElement().defName;
-            HeadTypePreferences.Add(new Preference<string> { Pref = selection, Value = GetUnmoderateValue(random) });
+            var selection = AttractionHelper.MaleHeads.RandomElement();
+            HeadTypePreferences.Add(new PreferenceHeadType { Def = selection, Value = GetUnmoderateValue(random) });
         }
         if (pawn.IsAttractedToWomen())
         {
-            string selection = AttractionHelper.FemaleHeads.RandomElement().defName;
-            HeadTypePreferences.Add(new Preference<string> { Pref = selection, Value = GetUnmoderateValue(random) });
+            var selection = AttractionHelper.FemaleHeads.RandomElement();
+            HeadTypePreferences.Add(new PreferenceHeadType { Def = selection, Value = GetUnmoderateValue(random) });
         }
+        Log.Message("Completed HeadTypesPrefs");
     }
 
     private float GetUnmoderateValue(System.Random rand)

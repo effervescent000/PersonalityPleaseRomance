@@ -17,9 +17,9 @@ public static class AttractionHelper
 
     // scrape hair color list off of genes. does this make biotech a hard requirement or are hair
     // genes in the basegame now?
-    public static List<Color?> HairColors = (from c in DefDatabase<GeneDef>.AllDefsListForReading
-                                             where c.endogeneCategory == EndogeneCategory.HairColor
-                                             select c.hairColorOverride).ToList();
+    public static List<GeneDef> HairColorGenes = (from c in DefDatabase<GeneDef>.AllDefsListForReading
+                                                  where c.endogeneCategory == EndogeneCategory.HairColor
+                                                  select c).ToList();
 
     public static List<HeadTypeDef> MaleHeads = (from head in DefDatabase<HeadTypeDef>.AllDefsListForReading
                                                  where head.gender == Gender.Male
