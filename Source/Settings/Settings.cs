@@ -10,7 +10,9 @@ public class Settings : ModSettings
     public bool LovinEnabled = true;
 
     //set automatically
+
     public static bool LovinModuleActive = false;
+    public static bool MainModuleActive = false;
 
     public override void ExposeData()
     {
