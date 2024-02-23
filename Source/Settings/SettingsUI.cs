@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace Personality.Romance;
 
-public static class GameHelper
+public static class SettingsUI
 {
-    public const int TICKS_PER_HOUR = 2500;
-    public const int TICKS_PER_DAY = 60_000;
 }

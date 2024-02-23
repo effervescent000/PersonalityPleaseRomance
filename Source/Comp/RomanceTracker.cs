@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,15 +22,15 @@ public class RomanceTracker : IExposable
     {
         List<RejectionItem> itemsToRemove = new();
 
-        foreach (var item in rejectionList)
+        foreach (RejectionItem item in rejectionList)
         {
             item.TicksSinceAsked++;
-            if (item.TicksSinceAsked > GameHelper.TICKS_PER_DAY * 2)
+            if (item.TicksSinceAsked > GenDate.TicksPerDay * 2)
             {
                 itemsToRemove.Add(item);
             }
         }
-        foreach (var item in itemsToRemove)
+        foreach (RejectionItem item in itemsToRemove)
         {
             rejectionList.Remove(item);
         }

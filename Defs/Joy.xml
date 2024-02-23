@@ -2,18 +2,10 @@
 <Defs>
   <!-- JoyGivers -->
   <JoyGiverDef>
-    <defName>TryHookup</defName>
-    <giverClass>Personality.Romance.JoyGiver_CasualLovin</giverClass>
+    <defName>SeekLovin</defName>
+    <giverClass>Personality.Romance.JoyGiver_SeekLovin</giverClass>
     <baseChance>1.5</baseChance>
-    <jobDef>LeadHookup</jobDef>
-    <joyKind>Lovin</joyKind>
+    <!-- <jobDef>LeadHookup</jobDef> -->
+    <joyKind>PP_Lovin</joyKind>
   </JoyGiverDef>
-
-
-  <!-- JoyKindDefs -->
-  <JoyKindDef>
-    <defName>Lovin</defName>
-    <label>adult fun</label>
-    <needsThing>false</needsThing>
-  </JoyKindDef>
 </Defs>

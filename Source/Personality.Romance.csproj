@@ -33,12 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Personality Please">
-      <HintPath>..\..\Psychology Reborn\Assemblies\Personality Please.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Personality.Lovin">
-      <HintPath>..\..\Personality-Lovin\Assemblies\Personality.Lovin.dll</HintPath>
+    <Reference Include="Personality-Core">
+      <HintPath>..\..\Personality-Core\1.4\Assemblies\Personality-Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -51,9 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CasualLovin\JobDriver_DoCasualLovin.cs" />
-    <Compile Include="CasualLovin\JobDriver_InitiateCasualLovin.cs" />
-    <Compile Include="CasualLovin\JoyGiver_CasualLovin.cs" />
+    <Compile Include="Attraction\AttractionTracker.cs" />
+    <Compile Include="Attraction\Preferences\Preference.cs" />
+    <Compile Include="Attraction\Preferences\PreferenceBodyType.cs" />
+    <Compile Include="Attraction\Preferences\PreferenceHairColor.cs" />
+    <Compile Include="Attraction\Preferences\PreferenceHairStyle.cs" />
+    <Compile Include="Attraction\Preferences\PreferenceHeadType.cs" />
+    <Compile Include="GUI\MindCardUtility.cs" />
+    <Compile Include="HarmonyPatches\PPCore\IsAsexual.cs" />
+    <Compile Include="HarmonyPatches\PPMain\PatchDrawRomance.cs" />
+    <Compile Include="HarmonyPatches\PPMain\PPMain.cs" />
+    <Compile Include="Helpers\AttractionHelper.cs" />
+    <Compile Include="Helpers\LovinHelper.cs" />
+    <Compile Include="Lovin\JobDriver_DoCasualLovin.cs" />
+    <Compile Include="Lovin\JobDriver_InitiateCasualLovin.cs" />
+    <Compile Include="Lovin\JoyGiver_SeekLovin.cs" />
     <Compile Include="Comp\RejectionItem.cs" />
     <Compile Include="Comp\RomanceComp.cs" />
     <Compile Include="Comp\RomanceTracker.cs" />
@@ -61,16 +69,14 @@
     <Compile Include="DefOfs\RomanceThoughtDefOf.cs" />
     <Compile Include="DefOfs\RomanceTraitDefOf.cs" />
     <Compile Include="HarmonyPatches\PawnGeneration\PawnGenerator.cs" />
-    <Compile Include="Helpers\GameHelper.cs" />
-    <Compile Include="Helpers\PawnHelper.cs" />
     <Compile Include="Helpers\RomanceHelper.cs" />
     <Compile Include="Helpers\SexualityValues.cs" />
     <Compile Include="Helpers\SexualityHelper.cs" />
     <Compile Include="OnStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HarmonyPatches\Startup.cs" />
     <Compile Include="RomanceMod.cs" />
     <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\SettingsUI.cs" />
     <Compile Include="Settings\SettingValues.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,5 +92,6 @@
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
