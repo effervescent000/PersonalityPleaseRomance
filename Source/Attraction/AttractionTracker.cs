@@ -17,6 +17,8 @@ public class AttractionTracker : IExposable
 
     public List<Preference> AllPrefs = new();
 
+    public Dictionary<string, AttractionEvaluation> evals = new();
+
     public AttractionTracker()
     { }
 
@@ -25,7 +27,7 @@ public class AttractionTracker : IExposable
         int seed = pawn.GetSeed();
         System.Random random = new(seed);
 
-        while (HairStylePreferences.Count < 4)
+        while (HairStylePreferences.Count < 2)
         {
             List<string> currentHairTags = (from tag in HairStylePreferences
                                             select tag.Label).ToList();
@@ -52,7 +54,7 @@ public class AttractionTracker : IExposable
         }
         Log.Message("Completed BodyTypePrefs");
 
-        while (HairColorPreferences.Count < 3)
+        while (HairColorPreferences.Count < 2)
         {
             List<Color> currentPrefs = (from PreferenceHairColor color in HairColorPreferences
                                         select color.Color).ToList();
@@ -112,6 +114,21 @@ public class AttractionTracker : IExposable
         }
 
         return validBodyTypes;
+    }
+
+    public AttractionEvaluation GetEvalFor(Pawn pawn)
+    {
+        if (evals.TryGetValue(pawn.ThingID, out AttractionEvaluation eval))
+        {
+            return eval;
+        }
+        AttractionEvaluation newEval = new(pawn);
+        newEval.MakeEval(this);
+        return newEval;
+    }
+
+    public void Tick()
+    {
     }
 
     public void ExposeData()
