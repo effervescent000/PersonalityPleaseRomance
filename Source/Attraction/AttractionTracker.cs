@@ -10,10 +10,12 @@ namespace Personality.Romance;
 
 public class AttractionTracker : IExposable
 {
-    public HashSet<Preference> HairStylePreferences = new();
-    public HashSet<Preference> BodyPreferences = new();
-    public HashSet<Preference> HairColorPreferences = new();
-    public HashSet<Preference> HeadTypePreferences = new();
+    public List<Preference> HairStylePreferences = new();
+    public List<Preference> BodyPreferences = new();
+    public List<Preference> HairColorPreferences = new();
+    public List<Preference> HeadTypePreferences = new();
+
+    public List<Preference> AllPrefs = new();
 
     public AttractionTracker()
     { }
@@ -74,6 +76,10 @@ public class AttractionTracker : IExposable
             HeadTypePreferences.Add(new PreferenceHeadType { Def = selection, Value = GetUnmoderateValue(random) });
         }
         Log.Message("Completed HeadTypesPrefs");
+
+        // at the very end
+        AllPrefs = AllPrefs.Concat(BodyPreferences).Concat(HairColorPreferences).Concat(HeadTypePreferences).Concat(HairStylePreferences).ToList();
+        Log.Message($"Length of AllPrefs {AllPrefs.Count}");
     }
 
     private float GetUnmoderateValue(System.Random rand)
