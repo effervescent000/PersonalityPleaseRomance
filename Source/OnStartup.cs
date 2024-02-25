@@ -30,5 +30,9 @@ public static class OnStartup
         {
             PPMain.Patch(harmony);
         }
+        if (Settings.LovinModuleActive)
+        {
+            PPL.Patch(harmony);
+        }
     }
 }

@@ -56,8 +56,10 @@
     <Compile Include="Attraction\Preferences\PreferenceHeadType.cs" />
     <Compile Include="GUI\MindCardUtility.cs" />
     <Compile Include="HarmonyPatches\PPCore\IsAsexual.cs" />
+    <Compile Include="HarmonyPatches\PPL\PatchGetAttractionFactor.cs" />
     <Compile Include="HarmonyPatches\PPMain\PatchDrawRomance.cs" />
     <Compile Include="HarmonyPatches\PPMain\PPMain.cs" />
+    <Compile Include="HarmonyPatches\PPL\PPL.cs" />
     <Compile Include="Helpers\AttractionHelper.cs" />
     <Compile Include="Helpers\LovinHelper.cs" />
     <Compile Include="Lovin\JobDriver_DoCasualLovin.cs" />

@@ -3,6 +3,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Verse;
 
@@ -10,6 +11,8 @@ namespace Personality.Romance;
 
 public class AttractionTracker : IExposable
 {
+    public Pawn Pawn;
+
     public List<Preference> HairStylePreferences = new();
     public List<Preference> BodyPreferences = new();
     public List<Preference> HairColorPreferences = new();
@@ -24,6 +27,7 @@ public class AttractionTracker : IExposable
 
     public void Initialize(Pawn pawn)
     {
+        Pawn = pawn;
         int seed = pawn.GetSeed();
         System.Random random = new(seed);
 

@@ -73,8 +73,6 @@ public class JobDriver_InitiateCasualLovin : JobDriver
             {
                 if (!DidTargetAccept)
                 {
-                    Log.Message("Target refused.");
-                    // add target to rejection list
                     FleckMaker.ThrowMetaIcon(TargetPawn.Position, TargetPawn.Map, FleckDefOf.IncapIcon);
                     RomanceComp comp = pawn.GetComp<RomanceComp>();
                     comp.RomanceTracker.RejectionList.Add(new RejectionItem(TargetPawn));
@@ -83,7 +81,6 @@ public class JobDriver_InitiateCasualLovin : JobDriver
                 }
                 else
                 {
-                    Log.Message("Target accepted");
                     FleckMaker.ThrowMetaIcon(TargetPawn.Position, TargetPawn.Map, FleckDefOf.Heart);
                     Actor.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.DoCasualLovin, TargetPawn, Bed, Bed.GetSleepingSlotPos(0)), JobTag.SatisfyingNeeds);
                     TargetPawn.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.DoCasualLovin, Actor, Bed, Bed.GetSleepingSlotPos(1)), JobTag.SatisfyingNeeds);
