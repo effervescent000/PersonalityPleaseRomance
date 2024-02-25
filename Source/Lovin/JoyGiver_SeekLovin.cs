@@ -1,11 +1,5 @@
 ﻿using Personality.Core;
 using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.Jobs;
 using Verse;
 using Verse.AI;
 
@@ -15,7 +9,20 @@ public class JoyGiver_SeekLovin : JoyGiver
 {
     public override float GetChance(Pawn pawn)
     {
-        // TODO make chance to choose this JoyGiver scale inversely with Lovin' need, if present
+        if (pawn.IsAsexual())
+        {
+            return 0f;
+        }
+        if (pawn.ageTracker.AgeBiologicalYearsFloat < 16f)
+        {
+            return 0f;
+        }
+
+        if (Settings.LovinModuleActive)
+        {
+            return LovinHelper.GetLovinBaseChance(pawn) * def.baseChance;
+        }
+
         return def.baseChance;
     }
 

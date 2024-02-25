@@ -42,4 +42,9 @@ public static class LovinHelper
     {
         return null;
     }
+
+    public static float GetLovinBaseChance(Pawn pawn)
+    {
+        return 0f;
+    }
 }
