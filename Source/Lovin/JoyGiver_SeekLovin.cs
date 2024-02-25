@@ -13,6 +13,12 @@ namespace Personality.Romance;
 
 public class JoyGiver_SeekLovin : JoyGiver
 {
+    public override float GetChance(Pawn pawn)
+    {
+        // TODO make chance to choose this JoyGiver scale inversely with Lovin' need, if present
+        return def.baseChance;
+    }
+
     public override Job TryGiveJob(Pawn pawn)
     {
         if (pawn.IsAsexual())

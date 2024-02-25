@@ -6,13 +6,13 @@
     <driverClass>Personality.Romance.JobDriver_InitiateCasualLovin</driverClass>
     <reportString>attempting hookup.</reportString>
     <joyMaxParticipants>1</joyMaxParticipants>
-    <joyKind>PP_Lovin</joyKind>
+    <joyKind>PP_LovinJoy</joyKind>
   </JobDef>
   <JobDef>
     <defName>DoCasualLovin</defName>
     <driverClass>Personality.Romance.JobDriver_DoCasualLovin</driverClass>
     <reportString>lovin'.</reportString>
-    <joyKind>PP_Lovin</joyKind>
+    <joyKind>PP_LovinJoy</joyKind>
     <joyXpPerTick>0.004</joyXpPerTick>
     <joyGainRate>3</joyGainRate>
     <casualInterruptible>false</casualInterruptible>

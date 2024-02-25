@@ -6,6 +6,6 @@
     <giverClass>Personality.Romance.JoyGiver_SeekLovin</giverClass>
     <baseChance>1.5</baseChance>
     <!-- <jobDef>LeadHookup</jobDef> -->
-    <joyKind>PP_Lovin</joyKind>
+    <joyKind>PP_LovinJoy</joyKind>
   </JoyGiverDef>
 </Defs>
