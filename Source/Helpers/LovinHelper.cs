@@ -33,6 +33,16 @@ public static class LovinHelper
         return JobMaker.MakeJob(RomanceJobDefOf.LeadHookup, partner, bed);
     }
 
+    public static void FinishLovin(LovinProps props)
+    {
+        Thought_Memory thought_memory = (Thought_Memory)ThoughtMaker.MakeThought(ThoughtDefOf.GotSomeLovin);
+        props.Actor.needs.mood?.thoughts.memories.TryGainMemory(thought_memory, props.Partner);
+
+        CoreLovinHelper.TryPregnancy(props);
+    }
+
+    // noops for patching below here --------------------------------
+
     public static Job TryDoSelfLovin(Pawn pawn)
     {
         return null;

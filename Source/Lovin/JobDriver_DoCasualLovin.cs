@@ -13,8 +13,8 @@ public class JobDriver_DoCasualLovin : JobDriver
     private readonly TargetIndex SlotInd = TargetIndex.C;
     private const int TicksBetweenHeartMotes = 100;
     private const float PregnancyChance = 0.05f;
-    private const int ticksForEnhancer = 2750;
-    private const int ticksOtherwise = 1000;
+    private int ticksBase = CoreGeneralHelper.GetHourBasedDuration(0.5f);
+    private int ticksForEnhancer = CoreGeneralHelper.GetHourBasedDuration(1.5f);
 
     private Building_Bed Bed => (Building_Bed)job.GetTarget(BedInd);
 
@@ -24,18 +24,6 @@ public class JobDriver_DoCasualLovin : JobDriver
     public override bool TryMakePreToilReservations(bool errorOnFailed)
     {
         return pawn.Reserve(Partner, job, 1, -1, null, errorOnFailed) && pawn.Reserve(Bed, job, Bed.SleepingSlotsCount, 0, null, errorOnFailed);
-    }
-
-    private bool IsInOrByBed(Building_Bed bed, Pawn pawn)
-    {
-        for (int i = 0; i < bed.SleepingSlotsCount; i++)
-        {
-            if (bed.GetSleepingSlotPos(i).InHorDistOf(pawn.Position, 1f))
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     protected override IEnumerable<Toil> MakeNewToils()
@@ -51,7 +39,7 @@ public class JobDriver_DoCasualLovin : JobDriver
             initAction = delegate { ticksLeftThisToil = 300; },
             tickAction = delegate
             {
-                if (IsInOrByBed(Bed, Partner))
+                if (CoreLovinHelper.IsInOrByBed(Bed, Partner))
                 {
                     ticksLeftThisToil = 0;
                 }
@@ -78,7 +66,7 @@ public class JobDriver_DoCasualLovin : JobDriver
         {
             initAction = delegate
             {
-                ticksLeftThisToil = ticksOtherwise;
+                ticksLeftThisToil = ticksBase;
             },
             tickAction = delegate
             {
@@ -100,8 +88,7 @@ public class JobDriver_DoCasualLovin : JobDriver
             {
                 initAction = delegate
                 {
-                    Thought_Memory thought_memory = (Thought_Memory)ThoughtMaker.MakeThought(ThoughtDefOf.GotSomeLovin);
-                    Actor.needs.mood?.thoughts.memories.TryGainMemory(thought_memory, Partner);
+                    LovinHelper.FinishLovin(new LovinProps(LovinContext.Casual, Actor, Partner));
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant,
                 socialMode = RandomSocialMode.Off
