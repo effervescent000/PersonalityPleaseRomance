@@ -62,9 +62,9 @@
     <Compile Include="HarmonyPatches\PPL\PPL.cs" />
     <Compile Include="Helpers\AttractionHelper.cs" />
     <Compile Include="Helpers\LovinHelper.cs" />
-    <Compile Include="Lovin\JobDriver_DoCasualLovin.cs" />
-    <Compile Include="Lovin\JobDriver_InitiateCasualLovin.cs" />
-    <Compile Include="Lovin\JoyGiver_SeekLovin.cs" />
+    <Compile Include="Jobs\JobDriver_DoCasualLovin.cs" />
+    <Compile Include="Jobs\JobDriver_InitiateCasualLovin.cs" />
+    <Compile Include="Joy\JoyGiver_SeekLovin.cs" />
     <Compile Include="Comp\RejectionItem.cs" />
     <Compile Include="Comp\RomanceComp.cs" />
     <Compile Include="Comp\RomanceTracker.cs" />
