@@ -9,12 +9,12 @@ namespace Personality.Romance;
 
 public class RejectionItem : IExposable
 {
-    private Pawn pawn;
+    public Pawn Pawn;
     public int TicksSinceAsked;
 
     public RejectionItem(Pawn pawn)
     {
-        this.pawn = pawn;
+        Pawn = pawn;
         TicksSinceAsked = 0;
     }
 
@@ -22,7 +22,7 @@ public class RejectionItem : IExposable
 
     public void ExposeData()
     {
-        Scribe_References.Look(ref pawn, "pawn");
+        Scribe_References.Look(ref Pawn, "pawn");
         Scribe_Values.Look(ref TicksSinceAsked, "ticks");
     }
 }
