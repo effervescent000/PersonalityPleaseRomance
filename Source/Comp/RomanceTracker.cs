@@ -18,6 +18,15 @@ public class RomanceTracker : IExposable
 
     public HashSet<RejectionItem> RejectionList => rejectionList;
 
+    public bool IsInRejectionList(Pawn target)
+    {
+        foreach (var item in rejectionList)
+        {
+            if (item.Pawn.ThingID == target.ThingID) return true;
+        }
+        return false;
+    }
+
     public void Tick()
     {
         List<RejectionItem> itemsToRemove = new();

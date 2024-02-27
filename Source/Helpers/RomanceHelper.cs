@@ -3,6 +3,7 @@ using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Personality.Romance;
 
@@ -12,17 +13,41 @@ public static class RomanceHelper
 
     private static readonly List<string> romanticRelationDefs = new() { PawnRelationDefOf.Lover.defName, PawnRelationDefOf.Fiance.defName, PawnRelationDefOf.Spouse.defName };
 
+    private static readonly SimpleCurve chanceToIgnoreRejectionByLawfulness = new()
+    {
+        new CurvePoint(-1f, 0.5f),
+        new CurvePoint(1f, -0.25f)
+    };
+
+    private static readonly SimpleCurve chanceToIgnoreRejectionByCompassion = new()
+    {
+        new CurvePoint(-1f, 0.5f),
+        new CurvePoint(1f, -1f)
+    };
+
     public static Pawn FindPartnerForIntimacy(Pawn actor)
     {
         List<DirectPawnRelation> relations = actor.relations.DirectRelations;
         List<Pawn> potentialPartners = new();
+
+        if (relations.Count == 0) return null;
+
+        float actorLawfulness = CorePersonalityHelper.GetPersonalityNodeRating(CorePersonalityHelper.LAWFULNESS, actor);
+        float actorCompassion = CorePersonalityHelper.GetPersonalityNodeRating(CorePersonalityHelper.COMPASSION, actor);
+
         foreach (DirectPawnRelation rel in relations)
         {
             Pawn target = rel.otherPawn;
             if (!target.Spawned || target.Map.uniqueID != actor.Map.uniqueID) continue;
             if (!romanticRelationDefs.Contains(rel.def.defName)) continue;
+
+            RomanceComp comp = actor.GetComp<RomanceComp>();
+            if (comp.RomanceTracker.IsInRejectionList(target))
+            {
+                if (Rand.Value >= chanceToIgnoreRejectionByCompassion.Evaluate(actorCompassion) + chanceToIgnoreRejectionByLawfulness.Evaluate(actorLawfulness)) continue;
+            }
+
             if (!target.IsOk()) continue;
-            // TODO rejection list check here
 
             potentialPartners.Add(target);
         }
@@ -60,14 +85,22 @@ public static class RomanceHelper
 
         List<Pawn> potentialPartners = new();
 
+        if (availablePawns.Count == 0) return null;
+
+        float actorLawfulness = CorePersonalityHelper.GetPersonalityNodeRating(CorePersonalityHelper.LAWFULNESS, actor);
+        float actorCompassion = CorePersonalityHelper.GetPersonalityNodeRating(CorePersonalityHelper.COMPASSION, actor);
+
         foreach (Pawn pawn in availablePawns)
         {
             if (pawn.ThingID == actor.ThingID || !pawn.IsOk()) continue;
             if (!CoreLovinHelper.DoesOrientationMatch(actor, pawn, true)) continue;
             if (!CoreGeneralHelper.IsTargetInRange(actor, pawn)) continue;
 
-            // TODO if pawn is in the Actor's reject list, ignore (unless conditions? maybe highly
-            // chaotic and/or uncompassionate?)
+            RomanceComp comp = actor.GetComp<RomanceComp>();
+            if (comp.RomanceTracker.IsInRejectionList(pawn))
+            {
+                if (Rand.Value >= chanceToIgnoreRejectionByCompassion.Evaluate(actorCompassion) + chanceToIgnoreRejectionByLawfulness.Evaluate(actorLawfulness)) continue;
+            }
 
             if (actor.IsBloodRelatedTo(pawn)) continue;
 
