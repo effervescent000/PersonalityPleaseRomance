@@ -4,20 +4,31 @@ namespace Personality.Romance;
 
 public class RomanceComp : ThingComp
 {
-    public RomanceTracker RomanceTracker = new();
-    public AttractionTracker AttractionTracker = new();
+    public RomanceTracker RomanceTracker;
+    public AttractionTracker AttractionTracker;
+
+    public RomanceComp()
+    {
+    }
+
+    public override void Initialize(CompProperties props)
+    {
+        base.Initialize(props);
+        RomanceTracker = new RomanceTracker();
+        AttractionTracker = new(parent as Pawn);
+    }
 
     public override void PostExposeData()
     {
         Scribe_Deep.Look(ref RomanceTracker, "romance");
-        Scribe_Deep.Look(ref AttractionTracker, "attraction");
+        Scribe_Deep.Look(ref AttractionTracker, "attraction", new object[] { parent as Pawn });
     }
 
     public override void PostSpawnSetup(bool respawningAfterLoad)
     {
         if (!respawningAfterLoad)
         {
-            AttractionTracker.Initialize(parent as Pawn);
+            AttractionTracker.Initialize();
         }
     }
 

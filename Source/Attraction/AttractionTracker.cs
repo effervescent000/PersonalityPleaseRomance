@@ -3,7 +3,6 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using Verse;
 
@@ -11,7 +10,7 @@ namespace Personality.Romance;
 
 public class AttractionTracker : IExposable
 {
-    public Pawn Pawn;
+    public Pawn pawn;
 
     public List<Preference> HairStylePreferences = new();
     public List<Preference> BodyPreferences = new();
@@ -22,12 +21,13 @@ public class AttractionTracker : IExposable
 
     public Dictionary<string, AttractionEvaluation> evals = new();
 
-    public AttractionTracker()
-    { }
-
-    public void Initialize(Pawn pawn)
+    public AttractionTracker(Pawn pawn)
     {
-        Pawn = pawn;
+        this.pawn = pawn;
+    }
+
+    public void Initialize()
+    {
         int seed = pawn.GetSeed();
         System.Random random = new(seed);
 
@@ -42,7 +42,6 @@ public class AttractionTracker : IExposable
                 HairStylePreferences.Add(new PreferenceHairStyle { Style = newTag, Value = GetUnmoderateValue(random) });
             }
         }
-        Log.Message("Completed HairStlePrefs");
 
         List<BodyTypeDef> validBodyTypes = MakeBodyTypes(pawn);
 
@@ -56,7 +55,6 @@ public class AttractionTracker : IExposable
                 BodyPreferences.Add(new PreferenceBodyType { Def = selection, Value = GetUnmoderateValue(random) });
             }
         }
-        Log.Message("Completed BodyTypePrefs");
 
         while (HairColorPreferences.Count < 2)
         {
@@ -68,24 +66,21 @@ public class AttractionTracker : IExposable
                 HairColorPreferences.Add(new PreferenceHairColor { Color = (Color)selection.hairColorOverride, Value = GetUnmoderateValue(random) });
             }
         }
-        Log.Message("Completed HairColorPrefs");
 
         // give pawns one head type attraction for each gender they're attracted to
         if (pawn.IsAttractedToMen())
         {
-            var selection = AttractionHelper.MaleHeads.RandomElement();
+            HeadTypeDef selection = AttractionHelper.MaleHeads.RandomElement();
             HeadTypePreferences.Add(new PreferenceHeadType { Def = selection, Value = GetUnmoderateValue(random) });
         }
         if (pawn.IsAttractedToWomen())
         {
-            var selection = AttractionHelper.FemaleHeads.RandomElement();
+            HeadTypeDef selection = AttractionHelper.FemaleHeads.RandomElement();
             HeadTypePreferences.Add(new PreferenceHeadType { Def = selection, Value = GetUnmoderateValue(random) });
         }
-        Log.Message("Completed HeadTypesPrefs");
 
         // at the very end
         AllPrefs = AllPrefs.Concat(BodyPreferences).Concat(HairColorPreferences).Concat(HeadTypePreferences).Concat(HairStylePreferences).ToList();
-        Log.Message($"Length of AllPrefs {AllPrefs.Count}");
     }
 
     private float GetUnmoderateValue(System.Random rand)

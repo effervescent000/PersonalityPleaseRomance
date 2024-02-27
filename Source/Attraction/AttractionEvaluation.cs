@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Verse;
+﻿using Verse;
 
 namespace Personality.Romance;
 
@@ -26,7 +21,7 @@ public class AttractionEvaluation
         {
             PhysicalScore += pref.CalcAttractionEffect(Target);
         }
-        PersonalityScore = attraction.Pawn.relations.CompatibilityWith(Target);
+        PersonalityScore = attraction.pawn.relations.CompatibilityWith(Target);
     }
 
     public void Tick()

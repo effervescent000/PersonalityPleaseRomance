@@ -64,7 +64,8 @@ public static class RomanceHelper
 
             // TODO instead of just choosing the first one, choose weighted random
 
-            return sorted[0].First;
+            //return sorted[0].First;
+            return sorted.RandomElementByWeight(pair => pair.Second).First;
         }
 
         return null;
@@ -113,9 +114,10 @@ public static class RomanceHelper
             List<Pair<Pawn, AttractionEvaluation>> sorted = partnersByAttraction.OrderByDescending(pair => pair.Second.PhysicalScore).ToList();
             Log.Message($"returning partner {sorted[0].First.LabelShort} with an attraction of {sorted[0].Second.PhysicalScore}");
 
-            // TODO instead of just choosing the first one, choose weighted random
+            // TODO make personality a non-zero factor in hookups, altho i'm not sure how important
+            // to make it
 
-            return sorted[0].First;
+            return sorted.RandomElementByWeight(pair => pair.Second.PhysicalScore).First;
         }
         return null;
     }
