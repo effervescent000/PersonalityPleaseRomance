@@ -3,7 +3,6 @@ using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Personality.Romance;
 
@@ -80,9 +79,6 @@ public static class RomanceHelper
                 select pawn
              ).ToList();
 
-        // make a new list of potential partners iterate over `availablePawns` and add pawns that
-        // pass basic checks to new list return a random pawn from new list
-
         List<Pawn> potentialPartners = new();
 
         if (availablePawns.Count == 0) return null;
@@ -108,8 +104,6 @@ public static class RomanceHelper
         }
         if (potentialPartners.Count > 0)
         {
-            //return potentialPartners.RandomElement();
-
             List<Pair<Pawn, AttractionEvaluation>> partnersByAttraction = new();
             RomanceComp comp = actor.GetComp<RomanceComp>();
             foreach (Pawn partner in potentialPartners)
