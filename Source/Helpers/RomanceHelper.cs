@@ -1,23 +1,57 @@
-﻿using RimWorld;
+﻿using Personality.Core;
+using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
-using Personality.Core;
-using RimWorld.BaseGen;
-using System;
 
 namespace Personality.Romance;
 
 public static class RomanceHelper
 {
-    private const float MINIMUM_ACCEPTANCE_VALUE = 0.5f;
+    private const float MINIMUM_HOOKUP_ACCEPTANCE_VALUE = 0.5f;
 
-    public static Pawn FindPartner(Pawn actor)
+    private static readonly List<string> romanticRelationDefs = new() { PawnRelationDefOf.Lover.defName, PawnRelationDefOf.Fiance.defName, PawnRelationDefOf.Spouse.defName };
+
+    public static Pawn FindPartnerForIntimacy(Pawn actor)
+    {
+        List<DirectPawnRelation> relations = actor.relations.DirectRelations;
+        List<Pawn> potentialPartners = new();
+        foreach (DirectPawnRelation rel in relations)
+        {
+            Pawn target = rel.otherPawn;
+            if (!target.Spawned || target.Map.uniqueID != actor.Map.uniqueID) continue;
+            if (!romanticRelationDefs.Contains(rel.def.defName)) continue;
+            if (!target.IsOk()) continue;
+            // TODO rejection list check here
+
+            potentialPartners.Add(target);
+        }
+
+        if (potentialPartners.Count > 0)
+        {
+            if (potentialPartners.Count == 1) { return potentialPartners[0]; }
+
+            List<Pair<Pawn, int>> partnersByAttraction = new();
+            foreach (Pawn pawn in potentialPartners)
+            {
+                partnersByAttraction.Add(new(pawn, actor.relations.OpinionOf(pawn)));
+            }
+            List<Pair<Pawn, int>> sorted = partnersByAttraction.OrderByDescending(pair => pair.Second).ToList();
+
+            // TODO instead of just choosing the first one, choose weighted random
+
+            return sorted[0].First;
+        }
+
+        return null;
+    }
+
+    public static Pawn FindPartnerForHookup(Pawn actor)
     {
         List<Pawn> availablePawns =
             (
                 from pawn in actor.Map.mapPawns.AllPawnsSpawned
-                where pawn.def.defName == "Human" && pawn.ageTracker.AgeBiologicalYears >= 16f
+                where pawn.def.defName == "Human" && pawn.ageTracker.AgeBiologicalYears >= 16
                 select pawn
              ).ToList();
 
@@ -28,19 +62,19 @@ public static class RomanceHelper
 
         foreach (Pawn pawn in availablePawns)
         {
-            if (pawn.ThingID == actor.ThingID || !pawn.IsOk()) { continue; }
+            if (pawn.ThingID == actor.ThingID || !pawn.IsOk()) continue;
 
             // pawns will never initiate casual lovin' with someone who does not match their orientation
-            if (!CoreLovinHelper.DoesOrientationMatch(actor, pawn, true)) { continue; }
+            if (!CoreLovinHelper.DoesOrientationMatch(actor, pawn, true)) continue;
 
             // if pawn is too far away, ignore
-            if (!IsTargetInRange(actor, pawn)) { continue; }
+            if (!CoreGeneralHelper.IsTargetInRange(actor, pawn)) continue;
 
             // TODO if pawn is in the Actor's reject list, ignore (unless conditions? maybe highly
             // chaotic and/or uncompassionate?)
 
             // no hooking up with blood relations
-            if (actor.IsBloodRelatedTo(pawn)) { continue; }
+            if (actor.IsBloodRelatedTo(pawn)) continue;
 
             potentialPartners.Add(pawn);
         }
@@ -50,11 +84,11 @@ public static class RomanceHelper
 
             List<Pair<Pawn, AttractionEvaluation>> partnersByAttraction = new();
             RomanceComp comp = actor.GetComp<RomanceComp>();
-            foreach (var partner in potentialPartners)
+            foreach (Pawn partner in potentialPartners)
             {
                 partnersByAttraction.Add(new(partner, comp.AttractionTracker.GetEvalFor(partner)));
             }
-            var sorted = partnersByAttraction.OrderByDescending(pair => pair.Second.PhysicalScore).ToList();
+            List<Pair<Pawn, AttractionEvaluation>> sorted = partnersByAttraction.OrderByDescending(pair => pair.Second.PhysicalScore).ToList();
             Log.Message($"returning partner {sorted[0].First.LabelShort} with an attraction of {sorted[0].Second.PhysicalScore}");
 
             // TODO instead of just choosing the first one, choose weighted random
@@ -62,11 +96,6 @@ public static class RomanceHelper
             return sorted[0].First;
         }
         return null;
-    }
-
-    public static bool IsTargetInRange(Pawn actor, Pawn target)
-    {
-        return actor.Position.InHorDistOf(target.Position, RomanceMod.settings.MaxInteractionDistance.Value);
     }
 
     public static bool DoesTargetAcceptHookup(Pawn actor, Pawn target)
@@ -84,7 +113,7 @@ public static class RomanceHelper
             rolledValue *= .1f;
         }
 
-        if (rolledValue < MINIMUM_ACCEPTANCE_VALUE)
+        if (rolledValue < MINIMUM_HOOKUP_ACCEPTANCE_VALUE)
         {
             return false;
         }

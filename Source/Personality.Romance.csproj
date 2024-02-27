@@ -63,7 +63,9 @@
     <Compile Include="Helpers\AttractionHelper.cs" />
     <Compile Include="Helpers\LovinHelper.cs" />
     <Compile Include="Jobs\JobDriver_DoCasualLovin.cs" />
+    <Compile Include="Jobs\JobDriver_DoIntimateLovin.cs" />
     <Compile Include="Jobs\JobDriver_InitiateCasualLovin.cs" />
+    <Compile Include="Jobs\JobDriver_InitiateIntimateLovin.cs" />
     <Compile Include="Joy\JoyGiver_SeekLovin.cs" />
     <Compile Include="Comp\RejectionItem.cs" />
     <Compile Include="Comp\RomanceComp.cs" />

@@ -46,6 +46,6 @@ public class JoyGiver_SeekLovin : JoyGiver
                 return LovinHelper.TryDoSelfLovin(pawn);
             }
         }
-        return LovinHelper.TryDoHookup(pawn);
+        return LovinHelper.TrySeekLovin(pawn);
     }
 }

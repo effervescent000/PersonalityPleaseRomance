@@ -6,7 +6,7 @@ using Verse.AI;
 
 namespace Personality.Romance;
 
-public class JobDriver_InitiateCasualLovin : JobDriver
+public class JobDriver_InitiateIntimateLovin : JobDriver
 {
     public bool targetAccepted = true;
     public bool DidTargetAccept => targetAccepted;
@@ -49,7 +49,7 @@ public class JobDriver_InitiateCasualLovin : JobDriver
             initAction = delegate
             {
                 ticksLeftThisToil = 50;
-                FleckMaker.ThrowMetaIcon(Actor.Position, Actor.Map, FleckDefOf.Heart);
+                Actor.ThrowHeart();
             }
         };
         proposeCasualLovin.AddFailCondition(() => !TargetPawn.IsOk());
@@ -81,9 +81,9 @@ public class JobDriver_InitiateCasualLovin : JobDriver
                 }
                 else
                 {
-                    FleckMaker.ThrowMetaIcon(TargetPawn.Position, TargetPawn.Map, FleckDefOf.Heart);
-                    Actor.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.DoCasualLovin, TargetPawn, Bed, Bed.GetSleepingSlotPos(0)), JobTag.SatisfyingNeeds);
-                    TargetPawn.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.DoCasualLovin, Actor, Bed, Bed.GetSleepingSlotPos(1)), JobTag.SatisfyingNeeds);
+                    TargetPawn.ThrowHeart();
+                    Actor.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.PP_DoIntimateLovin, TargetPawn, Bed, Bed.GetSleepingSlotPos(0)), JobTag.SatisfyingNeeds);
+                    TargetPawn.jobs.jobQueue.EnqueueFirst(JobMaker.MakeJob(RomanceJobDefOf.PP_DoIntimateLovin, Actor, Bed, Bed.GetSleepingSlotPos(1)), JobTag.SatisfyingNeeds);
                     TargetPawn.jobs.EndCurrentJob(JobCondition.InterruptOptional);
                     Actor.jobs.EndCurrentJob(JobCondition.InterruptOptional);
                 }

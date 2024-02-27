@@ -14,6 +14,9 @@ public static class RomanceJobDefOf
     public static JobDef DoCasualLovin;
     public static JobDef LeadHookup;
 
+    public static JobDef PP_InitiateIntimateLovin;
+    public static JobDef PP_DoIntimateLovin;
+
     static RomanceJobDefOf()
     {
         DefOfHelper.EnsureInitializedInCtor(typeof(RomanceJobDefOf));
