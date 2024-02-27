@@ -7,9 +7,20 @@ namespace Personality.Romance;
 
 public static class LovinHelper
 {
-    public static Job TryDoHookup(Pawn pawn)
+    public static Job TrySeekLovin(Pawn pawn)
     {
-        Pawn partner = RomanceHelper.FindPartner(pawn);
+        JobDef job = RomanceJobDefOf.PP_InitiateIntimateLovin;
+        Pawn partner = RomanceHelper.FindPartnerForIntimacy(pawn);
+
+        // if partner is null, then obviously we're looking for a hookup. otherwise, we may or may
+        // not look for a hookup. For now it's just a straight roll but would like to make it based
+        // on pawn's personality and quirks
+        if (partner == null || Rand.Value < 0.5f)
+        {
+            partner = RomanceHelper.FindPartnerForHookup(pawn);
+            job = RomanceJobDefOf.LeadHookup;
+        }
+
         // if we can't actually find a partner, then the pawn either gives up and does something
         // else or does self lovin'
         if (partner == null)
@@ -30,7 +41,7 @@ public static class LovinHelper
             return null;
         }
 
-        return JobMaker.MakeJob(RomanceJobDefOf.LeadHookup, partner, bed);
+        return JobMaker.MakeJob(job, partner, bed);
     }
 
     public static void FinishLovin(LovinProps props)

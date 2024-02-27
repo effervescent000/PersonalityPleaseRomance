@@ -1,22 +1,25 @@
 ﻿using Personality.Core;
 using RimWorld;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Verse;
 using Verse.AI;
 
 namespace Personality.Romance;
 
-public class JobDriver_DoCasualLovin : JobDriver
+public class JobDriver_DoIntimateLovin : JobDriver
 {
     private readonly TargetIndex PartnerInd = TargetIndex.A;
     private readonly TargetIndex BedInd = TargetIndex.B;
     private readonly TargetIndex SlotInd = TargetIndex.C;
     private const int TicksBetweenHeartMotes = 100;
-    private readonly int ticksBase = CoreGeneralHelper.GetHourBasedDuration(0.5f);
-    private readonly int ticksForEnhancer = CoreGeneralHelper.GetHourBasedDuration(1.5f);
+    private readonly int ticksBase = CoreGeneralHelper.GetHourBasedDuration(1f);
+    private readonly int ticksForEnhancer = CoreGeneralHelper.GetHourBasedDuration(2f);
 
     private Building_Bed Bed => (Building_Bed)job.GetTarget(BedInd);
-
     private Pawn Partner => (Pawn)(Thing)job.GetTarget(PartnerInd);
     private Pawn Actor => GetActor();
 
@@ -77,9 +80,9 @@ public class JobDriver_DoCasualLovin : JobDriver
             defaultCompleteMode = ToilCompleteMode.Delay
         };
 
-        if (Settings.LovinModuleActive)
+        if (CoreSettings.LovinModuleActive)
         {
-            yield return LovinHelper.EvaluateLovin(new LovinProps(LovinContext.Casual, Actor, Partner));
+            yield return LovinHelper.EvaluateLovin(new LovinProps(LovinContext.Intimate, Actor, Partner));
         }
         else
         {
@@ -87,7 +90,7 @@ public class JobDriver_DoCasualLovin : JobDriver
             {
                 initAction = delegate
                 {
-                    LovinHelper.FinishLovin(new LovinProps(LovinContext.Casual, Actor, Partner));
+                    LovinHelper.FinishLovin(new LovinProps(LovinContext.Intimate, Actor, Partner));
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant,
                 socialMode = RandomSocialMode.Off
