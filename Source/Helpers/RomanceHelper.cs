@@ -62,18 +62,13 @@ public static class RomanceHelper
 
         foreach (Pawn pawn in availablePawns)
         {
-            if (pawn.ThingID == actor.ThingID || !pawn.IsOk()) continue;
-
-            // pawns will never initiate casual lovin' with someone who does not match their orientation
+            if (pawn.ThingID == actor.ThingID || !pawn.IsOk()) continue
             if (!CoreLovinHelper.DoesOrientationMatch(actor, pawn, true)) continue;
-
-            // if pawn is too far away, ignore
             if (!CoreGeneralHelper.IsTargetInRange(actor, pawn)) continue;
 
             // TODO if pawn is in the Actor's reject list, ignore (unless conditions? maybe highly
             // chaotic and/or uncompassionate?)
 
-            // no hooking up with blood relations
             if (actor.IsBloodRelatedTo(pawn)) continue;
 
             potentialPartners.Add(pawn);
